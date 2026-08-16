@@ -1,0 +1,71 @@
+/* ELSU-LIKE SYSTEM STYLES */
+:root {
+  --bg-page: #e8ecf1;
+  --primary-blue: #1a4f8b;
+  --nav-dark: #1e3a56;
+  --header-blue: #2b5b88;
+  --table-header: #bccfe3;
+  --table-sub-header: #cbdaf0;
+  --table-border: #a8bdd4;
+  --alert-red: #c0292b;
+  --alert-bg: #fdf2f2;
+  --btn-blue: #1e5799;
+  --btn-green: #198754;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+body { background: var(--bg-page); min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+.system-banner { width: 100%; background: #ffebee; color: #c62828; border-bottom: 2px solid #ef9a9a; text-align: center; padding: 7px 12px; font-size: 13px; font-weight: 700; }
+.app-container { width: 100%; max-width: 960px; background: #fff; min-height: 95vh; box-shadow: 0 2px 16px rgba(0,0,0,0.12); display: flex; flex-direction: column; margin-bottom: 20px; }
+.portal-nav { display: flex; background: var(--nav-dark); overflow-x: auto; }
+.portal-nav button { flex: 1; padding: 12px 14px; border: none; background: transparent; color: #cfd8dc; font-size: 13px; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; }
+.portal-nav button.active { color: #fff; background: #244666; border-bottom: 3px solid #00d2ff; }
+.view-panel { display: none; flex-direction: column; flex: 1; }
+.view-panel.active { display: flex; }
+.login-wrapper { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; background: #f4f7f9; }
+.login-card { background: #fff; border: 1px solid #c9d6df; border-radius: 8px; padding: 30px 25px; width: 100%; max-width: 390px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); text-align: center; }
+.login-logo { font-size: 40px; }
+.login-title-top { color: #1a4f8b; font-weight: 800; font-size: 20px; }
+.login-univ-name { color: #b22222; font-size: 16px; font-weight: 700; margin-top: 4px; }
+.login-subtitle { color: #2b5b88; font-size: 13px; margin-bottom: 20px; }
+.form-floating-group { position: relative; margin-bottom: 16px; text-align: left; }
+.form-floating-group label { position: absolute; top: -9px; left: 12px; background: #fff; padding: 0 6px; font-size: 11.5px; color: #1a4f8b; font-weight: 600; }
+.form-floating-group input, .form-floating-group select { width: 100%; padding: 10px 12px; border: 1.5px solid #20639b; border-radius: 6px; font-size: 14px; outline: none; }
+.captcha-box { background: #f8fafc; border: 1px dashed #94a3b8; border-radius: 6px; padding: 10px; margin-bottom: 16px; text-align: left; font-size: 12px; }
+.captcha-label { font-weight: 700; color: #334155; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+.captcha-input { width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; margin-top: 4px; }
+.btn-login { width: 65%; margin: 12px auto 6px auto; display: block; background: var(--btn-blue); color: white; padding: 10px 15px; border: 1px solid #144074; border-radius: 5px; font-size: 14px; font-weight: 700; cursor: pointer; }
+.error-text { color: #c00; font-size: 12px; margin-bottom: 10px; }
+.student-header { background: #fff; padding: 12px 16px; border-bottom: 1px solid #d0d7de; text-align: center; }
+.student-header h2 { color: #003399; font-size: 18px; font-weight: 800; }
+.banner-subhead { background: var(--header-blue); color: #fff; font-size: 12px; font-weight: 700; padding: 5px 10px; text-transform: uppercase; text-align: center; }
+.disclaimer-alert { background: var(--alert-bg); color: var(--alert-red); font-size: 11.5px; font-weight: 700; padding: 8px 12px; text-align: center; border-bottom: 1px solid #f2cfcf; }
+.student-info-bar { background: #eef3f8; padding: 8px 14px; font-size: 12.5px; border-bottom: 1px solid #dbe4ed; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+.calc-button-bar { text-align: center; padding: 6px; background: #f7fafc; border-bottom: 1px solid #e2e8f0; }
+.calc-link-text { color: #0d6efd; font-size: 12.5px; text-decoration: underline; cursor: pointer; font-weight: 700; }
+.student-subnav { display: flex; background: #f1f5f9; border-bottom: 1px solid #cbd5e1; overflow-x: auto; }
+.student-subnav button { padding: 8px 14px; border: none; background: transparent; font-size: 12px; font-weight: 700; color: #475569; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
+.student-subnav button.active { color: #0d6efd; border-bottom: 2px solid #0d6efd; background: #fff; }
+.table-responsive { overflow-x: auto; width: 100%; background: #fff; }
+.elsu-table { width: 100%; border-collapse: collapse; font-size: 11.5px; text-align: center; min-width: 650px; }
+.elsu-table th, .elsu-table td { border: 1px solid var(--table-border); padding: 7px 5px; vertical-align: middle; }
+.elsu-table thead th { background: var(--table-header); color: #0d2847; font-weight: 700; font-size: 12px; }
+.admin-layout { display: flex; flex: 1; min-height: 85vh; }
+.admin-sidebar { width: 230px; background: #1e3a56; color: #cfd8dc; display: flex; flex-direction: column; }
+.admin-sidebar button { text-align: left; background: transparent; border: none; color: #cfd8dc; padding: 11px 16px; font-size: 12px; font-weight: 600; cursor: pointer; border-left: 3px solid transparent; }
+.admin-sidebar button.active { background: #14283c; color: #00d2ff; border-left: 3px solid #00d2ff; }
+.admin-main { flex: 1; background: #f4f7f9; padding: 18px; overflow-y: auto; }
+.admin-card { background: #fff; border-radius: 6px; border: 1px solid #dce4ec; padding: 16px; margin-bottom: 16px; }
+.admin-card h3 { font-size: 14.5px; color: #174269; border-bottom: 2px solid #eef2f6; padding-bottom: 8px; margin-bottom: 12px; }
+.form-row { margin-bottom: 12px; text-align: left; }
+.form-row label { display: block; font-size: 12px; color: #475569; font-weight: 600; margin-bottom: 4px; }
+.form-row input, .form-row select, .form-row textarea { width: 100%; padding: 7px 10px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 4px; }
+.admin-btn { background: var(--btn-green); color: #fff; border: none; padding: 8px 16px; font-size: 12.5px; font-weight: 700; border-radius: 4px; cursor: pointer; }
+.badge-status { padding: 3px 7px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.badge-active { background: #dcfce7; color: #166534; }
+.badge-inactive { background: #fee2e2; color: #991b1b; }
+.modal-overlay { position: fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.55); display:none; align-items:center; justify-content:center; z-index:10000; padding:12px; }
+.modal-overlay.active { display:flex; }
+.modal-box { background:#fff; width:100%; max-width:500px; border:3px solid #d9534f; border-radius:4px; }
+.modal-title-bar { background:#8faec9; color:#102a45; padding:6px 10px; font-weight:700; font-size:12px; display:flex; justify-content:space-between; }
+.btn-close-modal { background:#f0f0f0; border:1px solid #777; font-size:11px; padding:2px 8px; cursor:pointer; }
+@media(max-width: 768px) { .admin-layout { flex-direction: column; } .admin-sidebar { width: 100%; flex-direction: row; overflow-x: auto; } }

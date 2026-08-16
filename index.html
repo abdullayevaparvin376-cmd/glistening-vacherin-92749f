@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ELSU-LIKE DEMO / TEST SYSTEM</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Mandatory Security & Disclaimer Banner -->
+  <div class="system-banner">
+    ⚠️ ELSU-LIKE DEMO / TEST SYSTEM (Qeyri-rəsmi Tədris və Məlumat Portalı Prototipi)
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Top Navigation Bar -->
+    <div class="portal-nav">
+      <button id="navBtnStart" class="active" onclick="switchView('start')">🏛️ Əsas Səhifə</button>
+      <button id="navBtnStudentLogin" onclick="switchView('student-login')">👤 Tələbə Girişi</button>
+      <button id="navBtnAdminLogin" onclick="switchView('admin-login')">⚙️ Admin Girişi</button>
+      <button id="navBtnStudentCabinet" onclick="switchView('student-cabinet')" style="display:none;">📱 Tələbə Portalı</button>
+      <button id="navBtnAdminPanel" onclick="switchView('admin-panel')" style="display:none;">🛠️ Admin Panel</button>
+    </div>
+
+    <!-- 1. START / LANDING VIEW -->
+    <div id="viewStart" class="view-panel active">
+      <div class="login-wrapper">
+        <div class="login-card" style="max-width: 520px;">
+          <div class="login-logo">🎓</div>
+          <div class="login-title-top">ELSU-LIKE DEMO / TEST SYSTEM</div>
+          <div class="login-univ-name">İkitərəfli Tələbə İnformasiya Sistemi</div>
+          <p style="font-size: 12.5px; color:#555; margin: 12px 0 20px 0; line-height: 1.5;">
+            Təhlükəsiz HTTPS / PostgreSQL arxitekturası üzərində qurulmuşdur. Şifrələr brauzerdə saxlanılmır, backend tərəfindən Bcrypt ilə yoxlanılır.
+          </p>
+
+          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn-login" style="width: auto; margin:0;" onclick="switchView('student-login')">
+              👤 TƏLƏBƏ GİRİŞİ
+            </button>
+            <button class="btn-login" style="width: auto; margin:0; background:#1e3a56;" onclick="switchView('admin-login')">
+              ⚙️ ADMIN GİRİŞİ
+            </button>
+          </div>
+
+          <div style="margin-top: 25px; text-align: left; font-size: 11.5px; color:#475569; background:#f1f5f9; padding: 12px; border-radius:6px; border:1px solid #cbd5e1;">
+            <b>🔒 Təhlükəsizlik Məlumatı:</b><br>
+            • Frontend mənbə kodunda heç bir istifadəçinin plaintext şifrəsi saxlanılmır.<br>
+            • Autentifikasiya HttpOnly sessiya çərəzləri vasitəsilə təhlükəsiz idarə olunur.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. STUDENT LOGIN VIEW -->
+    <div id="viewStudentLogin" class="view-panel">
+      <div class="login-wrapper">
+        <div class="login-card">
+          <div class="login-logo">🖥️</div>
+          <div style="font-weight: 800; color: #1a4f8b; font-size: 18px; letter-spacing: 1px;">e-LSU DEMO</div>
+          <div class="login-univ-name">Lənkəran Dövlət Universiteti</div>
+          <div class="login-subtitle">Tələbənin şəxsi kabinetinə giriş</div>
+
+          <form onsubmit="handleLoginSubmit(event, 'STUDENT')">
+            <div class="form-floating-group">
+              <label>Tələbə ID:</label>
+              <input type="text" id="studentUsernameInput" placeholder="Məs: DEMO-2006" required>
+            </div>
+
+            <div class="form-floating-group">
+              <label>Açar söz (Şifrə):</label>
+              <input type="password" id="studentPasswordInput" placeholder="Şifrənizi daxil edin" required>
+            </div>
+
+            <div class="captcha-box">
+              <div class="captcha-label">
+                <span>🤖 CAPTCHA:</span>
+                <span id="studentCaptchaQuestion" style="font-size:13px; color:#1a4f8b; font-weight:800;">4 + 5 = ?</span>
+                <span style="font-size:11px; cursor:pointer; color:#0d6efd; text-decoration:underline;" onclick="fetchCaptcha('STUDENT')">🔄 Yenilə</span>
+              </div>
+              <input type="hidden" id="studentCaptchaId">
+              <input type="number" id="studentCaptchaAnswer" class="captcha-input" placeholder="Cavabı yazın..." required>
+            </div>
+
+            <div id="studentLoginError" class="error-text" style="display:none;"></div>
+
+            <button type="submit" class="btn-login">Daxil ol</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. ADMIN LOGIN VIEW -->
+    <div id="viewAdminLogin" class="view-panel">
+      <div class="login-wrapper">
+        <div class="login-card" style="border-top: 4px solid #1e3a56;">
+          <div class="login-logo">🛡️</div>
+          <div style="font-weight: 800; color: #1e3a56; font-size: 18px;">DEMO ADMIN PORTALI</div>
+          <div class="login-univ-name" style="color: #2b5b88;">Tədris İdarəetmə Mərkəzi</div>
+          <div class="login-subtitle">Dekanlıq / Kafedra İdarəçi Girişi</div>
+
+          <form onsubmit="handleLoginSubmit(event, 'ADMIN')">
+            <div class="form-floating-group">
+              <label>Admin ID:</label>
+              <input type="text" id="adminUsernameInput" placeholder="Məs: ADMIN-DEMO" required>
+            </div>
+
+            <div class="form-floating-group">
+              <label>Şifrə:</label>
+              <input type="password" id="adminPasswordInput" placeholder="Admin şifrəsi" required>
+            </div>
+
+            <div class="captcha-box">
+              <div class="captcha-label">
+                <span>🤖 CAPTCHA:</span>
+                <span id="adminCaptchaQuestion" style="font-size:13px; color:#1e3a56; font-weight:800;">7 + 3 = ?</span>
+                <span style="font-size:11px; cursor:pointer; color:#0d6efd; text-decoration:underline;" onclick="fetchCaptcha('ADMIN')">🔄 Yenilə</span>
+              </div>
+              <input type="hidden" id="adminCaptchaId">
+              <input type="number" id="adminCaptchaAnswer" class="captcha-input" placeholder="Cavabı yazın..." required>
+            </div>
+
+            <div id="adminLoginError" class="error-text" style="display:none;"></div>
+
+            <button type="submit" class="btn-login" style="background:#1e3a56;">İdarəetməyə Daxil Ol</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. STUDENT PORTAL CABINET -->
+    <div id="viewStudentCabinet" class="view-panel">
+      <div class="student-header">
+        <h2>Lənkəran Dövlət Universiteti</h2>
+        <div class="banner-subhead">QİYMƏTLƏNDİRMƏ HAQQINDA MƏLUMAT</div>
+      </div>
+
+      <div class="disclaimer-alert">
+        Diqqət! Məlumatlarda hər hansı uyğunsuzluq aşkar edildikdə, araşdırılıb ehtiyac yarandığı halda düzəliş edilməsi üçün fakültə dekanlıqlarına müraciət etməyiniz xahiş olunur.
+      </div>
+
+      <div class="student-info-bar">
+        <div><b>Tələbə:</b> <span id="stMetaName">-</span> (<span id="stMetaId">-</span>)</div>
+        <div><b>İxtisas qrupu:</b> <span id="stMetaFaculty">-</span></div>
+        <div><b>Semestr:</b> <span id="stMetaSemester">-</span></div>
+      </div>
+
+      <div class="calc-button-bar">
+        <span class="calc-link-text" onclick="openAbsenceCalcModal()">Qayıb limitlərin hesablanması</span>
+      </div>
+
+      <div class="student-subnav">
+        <button id="stTabBtnJournal" class="active" onclick="switchStudentTab('journal')">📖 Elektron Jurnal & Q.B.</button>
+        <button id="stTabBtnExams" onclick="switchStudentTab('exams')">🗓️ İmtahan Vaxtı Seçimi</button>
+        <button id="stTabBtnRequests" onclick="switchStudentTab('requests')">✍️ Düzəliş Müraciətlərim</button>
+        <button id="stTabBtnNotifications" onclick="switchStudentTab('notifications')">🔔 Bildirişlər</button>
+      </div>
+
+      <!-- MAIN ACADEMIC TABLE -->
+      <div id="stSubTabJournal">
+        <div class="table-responsive">
+          <table class="elsu-table">
+            <thead>
+              <tr>
+                <th style="width: 25px;">№</th>
+                <th style="width: 75px;">Tədris ili<br>Semestr</th>
+                <th style="width: 105px;">İmtahan Tarixi</th>
+                <th style="min-width: 170px;">Fənn</th>
+                <th style="width: 120px;">Davamiyyət / İştirak</th>
+                <th style="width: 90px; background-color:#a8c4df; color:#062340;">GİRİŞ BALI<br>(Q.B.)</th>
+              </tr>
+            </thead>
+            <tbody id="studentJournalTableBody"></tbody>
+          </table>
+        </div>
+
+        <div style="padding: 10px; background:#f8fafc; border-top: 1px solid #cbd5e1; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px; color:#555;">Məlumatlar mərkəzi bazadan birbaşa əldə edilir.</span>
+          <button onclick="handleLogout()" class="admin-btn" style="background:#64748b; padding:4px 10px;">Çıxış et</button>
+        </div>
+      </div>
+
+      <!-- EXAMS TAB -->
+      <div id="stSubTabExams" style="display:none; padding:16px;">
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:12px; margin-bottom:14px; font-size:12.5px; color:#166534;">
+          <b>ℹ️ İmtahan Vaxtının Seçilməsi:</b><br>
+          Aşağıda yalnız Administrasiya tərəfindən <b>AKTİV</b> edilmiş və boş yeri olan imtahan vaxtları göstərilir. Seçiminiz dərhal mərkəzi bazada qeydə alınır.
+        </div>
+        <div id="studentExamSlotsContainer"></div>
+      </div>
+
+      <!-- REQUESTS TAB -->
+      <div id="stSubTabRequests" style="display:none; padding:16px;">
+        <div style="background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:16px; margin-bottom:16px;">
+          <h4 style="color:#1a4f8b; font-size:14px; margin-bottom:10px;">✍️ Yeni Düzəliş Müraciəti Göndər</h4>
+          <form onsubmit="handleSendCorrectionRequest(event)">
+            <div class="form-row">
+              <label>Fənn:</label>
+              <select id="reqSubjectSelect" required></select>
+            </div>
+            <div class="form-row">
+              <label>Problem növü / Mövzu:</label>
+              <input type="text" id="reqTopic" placeholder="Məs: Qayıb sayı uyğunsuzluğu" required>
+            </div>
+            <div class="form-row">
+              <label>Açıqlama:</label>
+              <textarea id="reqDescription" rows="3" placeholder="Ətraflı məlumat yazın..." required></textarea>
+            </div>
+            <button type="submit" class="admin-btn" style="background:#1e5799;">Müraciəti Dekanlığa Göndər</button>
+          </form>
+        </div>
+        <div id="studentRequestsHistoryList"></div>
+      </div>
+
+      <!-- NOTIFICATIONS TAB -->
+      <div id="stSubTabNotifications" style="display:none; padding:16px;">
+        <div id="studentNotificationsList"></div>
+      </div>
+
+    </div>
+
+    <!-- 5. ADMIN PANEL -->
+    <div id="viewAdminPanel" class="view-panel">
+      <div class="admin-layout">
+        <div class="admin-sidebar">
+          <div style="padding:14px 16px; background:#14283c; font-weight:800; color:#fff; font-size:13px;">
+            ⚙️ ADMIN İDARƏETMƏ
+          </div>
+          <button class="active" onclick="switchAdminSection('dashboard')">📊 Dashboard</button>
+          <button onclick="switchAdminSection('students')">👥 Tələbələr</button>
+          <button onclick="switchAdminSection('grading')">📝 Qiymətləndirmə (D, Sİ, K, Q.B., İB)</button>
+          <button onclick="switchAdminSection('examslots')">🗓️ İmtahan Vaxtı Qurucusu</button>
+          <button onclick="handleLogout()" style="margin-top:auto; background:#dc3545; color:#fff; border:none; padding:8px; cursor:pointer;">Çıxış (Admin)</button>
+        </div>
+
+        <div class="admin-main">
+          <div id="adminSecDashboard">
+            <div class="admin-card">
+              <h3>📊 Sistem İcmalı & Təhlükəsizlik Statusu</h3>
+              <p style="font-size:12.5px; color:#444; line-height:1.5;">
+                Bütün məlumatlar PostgreSQL verilənlər bazasından HTTPS vasitəsilə təhlükəsiz oxunur və yazılır. Tələbələr yalnız Giriş Balını (Q.B.) və dərs iştirakını görür.
+              </p>
+            </div>
+          </div>
+
+          <div id="adminSecStudents" style="display:none;">
+            <div class="admin-card">
+              <h3>👥 Qeydiyyatlı Tələbələr</h3>
+              <div class="table-responsive">
+                <table class="elsu-table">
+                  <thead><tr><th>ID</th><th>Ad Soyad</th><th>İxtisas</th><th>Kurs</th><th>Status</th></tr></thead>
+                  <tbody id="adminStudentsTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ADMIN GRADING -->
+          <div id="adminSecGrading" style="display:none;">
+            <div class="admin-card">
+              <h3>📝 Bütün Qiymət Komponentlərinin Redaktəsi (Admin)</h3>
+              <p style="font-size:12px; color:#666; margin-bottom:12px;">Admin burada bütün komponentləri redaktə edir. Q.B. avtomatik tələbə kabinetinə ötürülür.</p>
+              
+              <form onsubmit="handleSaveAdminGrades(event)">
+                <div class="form-row"><label>Tələbə ID:</label><select id="admGradeStudentSelect" required></select></div>
+                <div class="form-row"><label>Fənn:</label><select id="admGradeSubjectSelect" required></select></div>
+                
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr)); gap:8px;">
+                  <div class="form-row"><label>D:</label><input type="number" id="admInputD" value="18" required></div>
+                  <div class="form-row"><label>Sİ:</label><input type="number" id="admInputSI" value="25" required></div>
+                  <div class="form-row"><label>Seminar (S):</label><input type="number" id="admInputS" value="0"></div>
+                  <div class="form-row"><label>Laboratoriya (L):</label><input type="number" id="admInputL" value="0"></div>
+                  <div class="form-row"><label>Kollokvium (K):</label><input type="number" id="admInputK" value="0"></div>
+                  <div class="form-row"><label>Q.B. (Giriş balı):</label><input type="number" id="admInputQB" value="43" style="font-weight:700; background:#f0fdf4;" required></div>
+                  <div class="form-row"><label>İB (İmtahan):</label><input type="number" id="admInputIB" value="42"></div>
+                </div>
+
+                <div class="form-row" style="margin-top:6px;">
+                  <label><input type="checkbox" id="admInputIsExamVisible"> İmtahan balı və Yekun nəticə tələbəyə göstərilsin</label>
+                </div>
+
+                <button type="submit" class="admin-btn">💾 Balları Yadda Saxla və Database-ə Yaz</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- ADMIN EXAM SLOTS -->
+          <div id="adminSecExamslots" style="display:none;">
+            <div class="admin-card">
+              <h3>🗓️ İmtahan Vaxtı Əlavə Et / İdarə Et</h3>
+              <form onsubmit="handleCreateExamSlot(event)" style="background:#f8fafc; padding:12px; border-radius:6px; border:1px solid #cbd5e1; margin-bottom:16px;">
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
+                  <div class="form-row"><label>Fənn:</label><select id="admSlotSubjectSelect" required></select></div>
+                  <div class="form-row"><label>Tarix:</label><input type="date" id="admSlotDate" value="2026-06-14" required></div>
+                  <div class="form-row"><label>Saat:</label><input type="time" id="admSlotTime" value="10:00" required></div>
+                  <div class="form-row"><label>Yer Limiti:</label><input type="number" id="admSlotCapacity" value="30" required></div>
+                  <div class="form-row">
+                    <label>Status:</label>
+                    <select id="admSlotStatus">
+                      <option value="active">Aktiv (Tələbə görür)</option>
+                      <option value="inactive">Deaktiv (Gizli)</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" class="admin-btn">➕ İmtahan Vaxtını Əlavə Et</button>
+              </form>
+
+              <h4 style="margin-top:15px; font-size:13px; color:#174269;">Mövcud İmtahan Slotları:</h4>
+              <div class="table-responsive" style="margin-top:8px;">
+                <table class="elsu-table">
+                  <thead><tr><th>Fənn</th><th>Tarix & Saat</th><th>Dolu / Limit</th><th>Status</th><th>Əməliyyat</th></tr></thead>
+                  <tbody id="adminSlotsListTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUBJECT DETAILS MODAL -->
+  <div id="subjectModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-title-bar">
+        <span>Davamiyyət və qiymətləndirmə</span>
+        <button class="btn-close-modal" onclick="closeSubjectModal()">Bağla</button>
+      </div>
+      <div class="modal-content-area" id="modalSubjectBodyContent"></div>
+    </div>
+  </div>
+
+  <!-- ABSENCE CALCULATOR MODAL -->
+  <div id="calcModal" class="modal-overlay">
+    <div class="modal-box" style="border-color:#17b8df;">
+      <div class="modal-title-bar" style="background:#17b8df; color:#042b35;">
+        <span>Qayıb Limitlərinin Hesablanması</span>
+        <button class="btn-close-modal" onclick="closeAbsenceCalcModal()">Bağla</button>
+      </div>
+      <div class="modal-content-area" style="padding:16px;">
+        <div style="text-align:center; font-weight:700; font-size:14px; margin-bottom:12px;">
+          Lənkəran Dövlət Universiteti<br>fənn üzrə qayıb limitlərin HESABLANMASI
+        </div>
+        <div class="form-row"><label>Mühazirə saatları:</label><input type="number" id="calcM" value="30"></div>
+        <div class="form-row"><label>Laboratoriya saatları:</label><input type="number" id="calcL" value="15"></div>
+        <button class="btn-login" style="width:100%; background:#17b8df; color:#000; border:none; margin:10px 0;" onclick="calcLimits()">LİMİTLƏRİ HESABLA</button>
+        <div id="calcResult" style="font-size:12px; background:#f8fafc; padding:8px; border:1px solid #cbd5e1; line-height:1.45;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
