@@ -1,6 +1,6 @@
 const API_BASE_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:5000' 
-  : 'https://elsu-secure-backend.onrender.com';
+  : 'https://elsu-demo-1.onrender.com';
 
 let fallbackCaptcha = { student: 9, admin: 10 };
 
